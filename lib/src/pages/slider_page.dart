@@ -7,6 +7,7 @@ class SliderPage extends StatefulWidget {
 
 class _SliderPageState extends State<SliderPage> {
   double _valorSlider = 100.0;
+  bool _bloquearCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,12 @@ class _SliderPageState extends State<SliderPage> {
         body: Container(
             padding: EdgeInsets.only(top: 50.0),
             child: Column(
-              children: <Widget>[_crearSlider(), crearImagen()],
+              children: <Widget>[
+                _crearSlider(),
+                crearImagen(),
+                crearCheckbox(),
+                _crearSwitch(),
+              ],
             )));
   }
 
@@ -29,11 +35,13 @@ class _SliderPageState extends State<SliderPage> {
       value: _valorSlider,
       min: 10.0,
       max: 400.0,
-      onChanged: (valor) {
-        setState(() {
-          _valorSlider = valor;
-        });
-      },
+      onChanged: (_bloquearCheck)
+          ? null
+          : (valor) {
+              setState(() {
+                _valorSlider = valor;
+              });
+            },
     );
   }
 
@@ -43,6 +51,39 @@ class _SliderPageState extends State<SliderPage> {
           'https://mobile.deadbydaylight.com/wp-content/uploads/2020/04/The-shape-hero-mobile.jpg'),
       width: _valorSlider,
       fit: BoxFit.contain,
+    );
+  }
+
+  crearCheckbox() {
+    // return Checkbox(
+    //   value: _bloquearCheck,
+    //   onChanged: (valor) {
+    //     setState(() {
+    //       _bloquearCheck = valor;
+    //     });
+    //   },
+    // );
+
+    return CheckboxListTile(
+      title: Text('Bloquear Slider'),
+      value: _bloquearCheck,
+      onChanged: (valor) {
+        setState(() {
+          _bloquearCheck = valor;
+        });
+      },
+    );
+  }
+
+  _crearSwitch() {
+    return SwitchListTile(
+      title: Text('Bloquear Slider'),
+      value: _bloquearCheck,
+      onChanged: (valor) {
+        setState(() {
+          _bloquearCheck = valor;
+        });
+      },
     );
   }
 }
